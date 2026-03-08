@@ -41,5 +41,5 @@ Working on this project has given me an opportunity to build a real interface wi
 
 ## Proof of Participation
 - Group members were Kevin and Lyke
-- A screenshot of me discord name joining the CrimsonCode discord. Name is yunggio.
+- A screenshot of my discord name joining the CrimsonCode discord. Name is yunggio.
 
