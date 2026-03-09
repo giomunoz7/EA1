@@ -9,6 +9,61 @@ For this project, I worked mainly on the frontend of the application. I built th
 
 The landing page includes a form where users can enter their username, first name, last name, and major. I also added a toggle that lets users switch between **Sign Up** and **Log In** without leaving the page. My focus was making the interface simple, clean, and easy for new students to understand.
 
+## Code sample
+const [mode, setMode] = useState('Sign Up')
+const [isLoading, setIsLoading] = useState(false);
+
+const onFinish = async (values: FormValues) => {
+  setIsLoading(true);
+
+  try {
+    if (mode === "Log In") {
+      const response = await axios.get(
+        "http://127.0.0.1:5000/fetch-student",
+        { params: { username: values.username } }
+      );
+
+      const data = response.data;
+
+      if (data.result) {
+        setLogin(true);
+        setUser({
+          username: data.user.username,
+          firstName: data.user.first_name,
+          lastName: data.user.last_name,
+          major: data.user.major
+        });
+      } else {
+        alert(data.message || "User not found.");
+      }
+    } else {
+      const response = await axios.post(
+        "http://127.0.0.1:5000/create-student",
+        {
+          username: values.username,
+          first_name: values.firstName,
+          last_name: values.lastName,
+          major: values.major
+        }
+      );
+
+      const data = response.data;
+
+      if (data.result) {
+        setLogin(true);
+        setUser(values);
+        alert("Generating your academic plan...");
+      } else {
+        alert(data.message || "Something went wrong.");
+      }
+    }
+  } catch (error) {
+    alert("Server error. Make sure Flask is running.");
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 ## What the Code Does
 The code I wrote controls the main landing page of the site. Some of the key things it does include:
 
